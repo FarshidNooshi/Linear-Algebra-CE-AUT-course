@@ -11,14 +11,17 @@ def calculate_dots_and_compress(u, sigma, v, k):
 
 def singular_value_decomposition(image, k):
     array = np.array(image)
+    r_matrix = array[:, :, 0]
+    g_matrix = array[:, :, 1]
+    b_matrix = array[:, :, 2]
 
-    r_u, r_sigma, r_v = np.linalg.svd(array[:, :, 0])
+    r_u, r_sigma, r_v = np.linalg.svd(r_matrix)
     r = calculate_dots_and_compress(r_u, r_sigma, r_v, k)
 
-    g_u, g_sigma, g_v = np.linalg.svd(array[:, :, 1])
+    g_u, g_sigma, g_v = np.linalg.svd(g_matrix)
     g = calculate_dots_and_compress(g_u, g_sigma, g_v, k)
 
-    b_u, b_sigma, b_v = np.linalg.svd(array[:, :, 2])
+    b_u, b_sigma, b_v = np.linalg.svd(b_matrix)
     b = calculate_dots_and_compress(b_u, b_sigma, b_v, k)
 
     return np.stack((r, g, b), axis=2)
